@@ -11,6 +11,10 @@ buildscript {
     repositories {
         jcenter()
         google()
+        maven { //Temporary fix for missing android dependencies - Thanks Google ¬_¬
+            artifactUrls "https://dl.bintray.com/android/android-tools/"
+            url "https://jcenter.bintray.com"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
@@ -32,6 +36,21 @@ allprojects {
     }
 }
 
+//Temporary fix for missing android dependencies - Thanks Google ¬_¬
+//https://issuetracker.google.com/issues/120759347#
+subprojects { subproject ->
+    if (subproject.name.contains('react-native-vector-icons') ||
+    subproject.name.contains('react-native-image-picker') ||
+    subproject.name.contains('react-native-linear-gradient') ||
+    subproject.name.contains('rn-fetch-blob') ||
+    subproject.name.contains('react-native-image-resizer')){
+        buildscript {
+            repositories {
+                maven { url "https://dl.bintray.com/android/android-tools/"  }
+            }
+        }
+    }
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.4'
