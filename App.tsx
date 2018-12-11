@@ -4,8 +4,10 @@ import { StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import MainNavigator from './src/config/navigation';
 import store from './src/Redux';
 import NavigationService from './src/config/navigation/NavigationService';
+import { Config } from 'react-native-config';
+import * as SB from './storybook';
 
-export default class App extends Component {
+class App extends Component {
   // navigatorRef: RefObject<NavigationContainerComponent> = React.createRef();
   render() {
     return (
@@ -31,3 +33,8 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+//i have no idea if this is legit, but we're doing it anyway
+const AppRoot = (Config.IS_STORYBOOK == "true") ? SB : App;
+
+export default AppRoot;
